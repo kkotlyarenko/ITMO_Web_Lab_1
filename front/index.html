@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Programming Lab1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FAFAFA;
+            color: #121212;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #6200EE;
+            color: #FFFFFF;
+            padding: 24px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 24px auto;
+            padding: 16px;
+            border-radius: 12px;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #6200EE;
+            font-size: 28px;
+            margin-bottom: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .form-group {
+            margin: 16px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #121212;
+        }
+
+        .form-group select,
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #BDBDBD;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background-color: #FAFAFA;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6200EE;
+            box-shadow: 0 2px 8px rgba(98, 0, 238, 0.2);
+        }
+
+        .form-group button {
+            background-color: #6200EE;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #3700B3;
+        }
+
+        .form-group .error {
+            color: #B00020;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #BDBDBD;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background-color: #FAFAFA;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #6200EE;
+            box-shadow: 0 2px 8px rgba(98, 0, 238, 0.2);
+        }
+
+        #resultsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+        }
+
+        #resultsTable th, #resultsTable td {
+            padding: 12px;
+            border-bottom: 1px solid #CCCCCC;
+            text-align: left;
+        }
+
+        #resultsTable th {
+            background-color: #F5F5F5;
+            color: #121212;
+            font-weight: 500;
+        }
+
+        #resultsTable tr:hover {
+            background-color: #E0E0E0;
+        }
+
+        .image-container {
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 75%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            margin-top: 32px;
+            padding: 12px;
+            font-size: 14px;
+            text-align: center;
+            color: #777777;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    Full Name: Kotlyarenko K.A.<br>
+    Group: P3209<br>
+    Variant: 408878
+</header>
+
+<div class="container">
+    <h2>Check if a Point Lies Within an Area</h2>
+
+    <div class="image-container">
+        <img src="img.png" alt="Graphical representation">
+    </div>
+
+    <form id="dataForm">
+        <div class="form-group">
+            <label for="x">Select X:</label>
+            <select id="x" name="x">
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="y">Enter Y (-5 ... 3):</label>
+            <input type="number" id="y" name="y" placeholder="Enter Y" min="-5" max="3" step="any">
+            <span class="error" id="yError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="r">Enter R (2 ... 5):</label>
+            <input type="number" id="r" name="r" placeholder="Enter R" min="2" max="5" step="any">
+            <span class="error" id="rError"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Check</button>
+        </div>
+    </form>
+
+    <div id="resultsContainer">
+        <h3>Results</h3>
+        <table id="resultsTable">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+                <th>R</th>
+                <th>Result</th>
+                <th>Request Time</th>
+                <th>Execution Time (ms)</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer id="footer">
+    &copy; 2024 kkotlyarenko
+</footer>
+
+<script>
+    document.getElementById("dataForm").onsubmit = function (e) {
+        e.preventDefault();
+        var xValue = document.getElementById("x").value;
+        var yValue = parseFloat(document.getElementById("y").value);
+        var rValue = parseFloat(document.getElementById("r").value);
+
+        document.getElementById("yError").textContent = "";
+        document.getElementById("rError").textContent = "";
+
+        var isValid = true;
+        if (isNaN(yValue) || yValue < -5 || yValue > 3) {
+            document.getElementById("yError").textContent = "Enter a valid Y value (-5 ... 3)";
+            isValid = false;
+        }
+        if (isNaN(rValue) || rValue < 2 || rValue > 5) {
+            document.getElementById("rError").textContent = "Enter a valid R value (2 ... 5)";
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        var url = `http://localhost:8080/?x=${xValue}&y=${yValue}&r=${rValue}`;
+
+        fetch(url, {
+            method: "GET"
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result !== undefined) {
+                    var results = JSON.parse(localStorage.getItem("results")) || [];
+                    var result = {
+                        x: xValue,
+                        y: yValue,
+                        r: rValue,
+                        result: data.result ? "Hit" : "Miss",
+                        currentTime: new Date().toLocaleString(),
+                        executionTimeMs: data.executionTimeMs + " ms"
+                    };
+                    results.push(result);
+                    localStorage.setItem("results", JSON.stringify(results));
+
+                    renderTable();
+                } else if (data.reason) {
+                    alert(data.reason);
+                }
+            })
+            .catch(error => {
+                alert("Error sending request: " + error);
+            });
+    };
+
+    function renderTable() {
+        var results = JSON.parse(localStorage.getItem("results")) || [];
+
+        results.reverse();
+
+        var tableBody = document.querySelector("#resultsTable tbody");
+
+        tableBody.innerHTML = "";
+
+        results.forEach(result => {
+            var newRow = tableBody.insertRow();
+            newRow.insertCell(0).textContent = result.x;
+            newRow.insertCell(1).textContent = result.y;
+            newRow.insertCell(2).textContent = result.r;
+            newRow.insertCell(3).textContent = result.result;
+            newRow.insertCell(4).textContent = result.currentTime;
+            newRow.insertCell(5).textContent = result.executionTimeMs;
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        renderTable();
+    });
+
+    document.getElementById("footer").onclick = function() {
+        localStorage.removeItem("results");
+        renderTable();
+    };
+</script>
+</body>
+</html>

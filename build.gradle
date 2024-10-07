@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+dependencies {
+    implementation files('lib/fastcgi-lib.jar')
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['resources']
+        }
+    }
+}
+
+application {
+    mainClass = 'Main'
+}
+
+shadowJar {
+    archiveBaseName.set('my-application')
+    archiveVersion.set('1.0')
+    archiveClassifier.set('all')
+    destinationDirectory = file('out/jar')
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+}
+
+tasks.register('copyFastCGILib', Copy) {
+    from 'lib/fastcgi-lib.jar'
+    into 'out/jar/libs'
+}
+
+build.dependsOn copyFastCGILib
