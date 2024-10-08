@@ -263,7 +263,7 @@
         var url = `http://localhost:8080/?x=${xValue}&y=${yValue}&r=${rValue}`;
 
         fetch(url, {
-            method: "GET"
+            method: "POST"
         })
             .then(response => response.json())
             .then(data => {
